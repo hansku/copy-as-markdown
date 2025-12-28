@@ -1,11 +1,7 @@
+/// <reference types="chrome" />
 import TurndownService from 'turndown';
-import {gfm} from 'turndown-plugin-gfm';
-import {MathMLToLaTeX} from 'mathml-to-latex';
-
-// Chrome does not support the browser namespace yet.
-if (typeof browser === 'undefined') {
-	globalThis.browser = chrome;
-}
+import { gfm } from 'turndown-plugin-gfm';
+import { MathMLToLaTeX } from 'mathml-to-latex';
 
 // Instantiate Turndown instance
 const turndownService = new TurndownService({
@@ -29,8 +25,8 @@ turndownService.addRule('listItem', {
 
 		let prefix = options.bulletListMarker + ' ';
 		const parent = node.parentNode;
-		if (parent.nodeName === 'OL') {
-			const start = parent.getAttribute('start');
+		if (parent && parent.nodeName === 'OL') {
+			const start = (parent as HTMLElement).getAttribute('start');
 			const index = Array.prototype.indexOf.call(parent.children, node);
 			prefix = (start ? Number(start) + index : index + 1) + '. ';
 		}
@@ -40,20 +36,22 @@ turndownService.addRule('listItem', {
 });
 
 turndownService.addRule('mathml', {
-	filter: 'math',
-	replacement: (content, node, _) => {
-		const latex = MathMLToLaTeX.convert(node.outerHTML);
+	filter: ['math'] as any,
+	replacement: (_, node, __) => {
+		const latex = MathMLToLaTeX.convert((node as HTMLElement).outerHTML);
 		if (!latex) {
 			return '';
 		}
 
-		const delim = node.getAttribute('display') === 'block' ? '$$' : '$';
+		const delim = (node as HTMLElement).getAttribute('display') === 'block' ? '$$' : '$';
 		return delim + latex + delim;
 	}
 });
 
-function getSelectionAsHTML() {
-	const selection = document.getSelection();
+function getSelectionAsHTML(): string {
+	const selection = window.getSelection();
+	if (!selection) return '';
+
 	let containerTagName = '';
 
 	if (selection.rangeCount === 0) {
@@ -64,7 +62,7 @@ function getSelectionAsHTML() {
 	const container = selectionRange.commonAncestorContainer;
 
 	// All of text in container element is selected, then use parents tag
-	if (selectionRange.toString().trim() === container.textContent.trim()) {
+	if (selectionRange.toString().trim() === container.textContent?.trim()) {
 		// Handle plain text selections where parent is sometimes 'Node' or 'DocumentFragment'
 		// Ideally, this should not happen, but text selection in browsers is unpredictable
 		if (container instanceof Element) {
@@ -98,7 +96,7 @@ function getSelectionAsHTML() {
 	// or it would not be considered as fenced code block
 	if (containerTagName === 'pre') {
 		// Classes of parent or container node can be used by GFM plugin to detect language
-		const classes = (container.parentNode || container).classList.toString();
+		const classes = (container.parentNode || container) instanceof Element ? ((container.parentNode || container) as Element).classList.toString() : '';
 
 		return `
 			<div class="${classes}">
@@ -110,20 +108,41 @@ function getSelectionAsHTML() {
 	return '<' + containerTagName + '>' + wrapper.innerHTML + '</' + containerTagName + '>';
 }
 
-browser.runtime.onMessage.addListener(async message => {
-	if (message.actionType === '') {
-		return;
-	}
-
-	let htmlContent = message.htmlContent;
-	if (message.actionType === 'selection') {
-		htmlContent = getSelectionAsHTML();
+// Function that performs the conversion, can be called directly or via message
+async function convertToMarkdown(actionType: string = 'selection', htmlContent: string = '') {
+	let contentToConvert = htmlContent;
+	if (actionType === 'selection') {
+		contentToConvert = getSelectionAsHTML();
 	}
 
 	try {
-		const markdownContent = turndownService.turndown(htmlContent);
-		await navigator.clipboard.writeText(markdownContent);
+		if (!contentToConvert) return; // Nothing to convert
+
+		// Fetch options and configure turndown
+		// Check if chrome.storage is available (might not be in some contexts, strictly speaking)
+		if (chrome && chrome.storage && chrome.storage.sync) {
+			const options = await chrome.storage.sync.get({
+				headingStyle: 'atx',
+				bulletListMarker: '-'
+			});
+
+			if (options.headingStyle) turndownService.options.headingStyle = options.headingStyle as any;
+			if (options.bulletListMarker) turndownService.options.bulletListMarker = options.bulletListMarker as any;
+		}
+
+		const markdownContent = turndownService.turndown(contentToConvert);
+		navigator.clipboard.writeText(markdownContent).catch(err => console.error('Failed to copy', err));
 	} catch (error) {
 		console.error(error);
 	}
-});
+}
+
+// Listen for messages
+if (!(window as any).copyAsMarkdownInjected) {
+	(window as any).copyAsMarkdownInjected = true;
+	chrome.runtime.onMessage.addListener((message) => {
+		if (message.actionType) {
+			convertToMarkdown(message.actionType, message.htmlContent);
+		}
+	});
+}
