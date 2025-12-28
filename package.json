@@ -44,5 +44,6 @@
 			"unicorn/string-content": "off",
 			"import/no-unassigned-import": "off"
 		}
-	}
+	},
+	"version": "2.0.0"
 }
