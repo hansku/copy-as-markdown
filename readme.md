@@ -1,20 +1,28 @@
 # <img src="public/copy-as-markdown.png" width="45" align="left"> Copy as Markdown
 
-> Browser extension to copy hyperlinks, images, and selected text as Markdown to your clipboard
+> A fast, lean, and modern browser extension to copy hyperlinks, images, and selected text as Markdown.
 
-## Install
+<p align="center">
+    <a href="https://chromewebstore.google.com/detail/copy-as-markdown/nlaionblcaejecbkcillglodmmfhjhfi"><img src="https://img.shields.io/chrome-web-store/v/nlaionblcaejecbkcillglodmmfhjhfi.svg?label=Chrome%20Web%20Store&logo=google-chrome&logoColor=white&color=blue" alt="Chrome Web Store"></a>
+    <a href="https://addons.mozilla.org/en-US/firefox/addon/cpy-as-md"><img src="https://img.shields.io/amo/v/cpy-as-md.svg?label=Firefox%20Add-ons&logo=firefox-browser&logoColor=white&color=orange" alt="Firefox Add-ons"></a>
+</p>
 
-[<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/chrome/chrome.svg" width="48" alt="Chrome" valign="middle">][link-chrome] [<img valign="middle" src="https://img.shields.io/chrome-web-store/v/nlaionblcaejecbkcillglodmmfhjhfi.svg?label=%20">][link-chrome] and other Chromium browsers
+## ✨ New in v2.0 (Best-in-Class Edition)
 
-[<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/firefox/firefox.svg" width="48" alt="Firefox" valign="middle">][link-firefox] [<img valign="middle" src="https://img.shields.io/amo/v/cpy-as-md.svg?label=%20">][link-firefox] including Firefox Android
+We have completely rebuilt the extension to be the **most efficient and feature-rich** Markdown copier available.
+
+*   ⚡️ **0% Idle Resource Usage**: Using "On-Demand Injection", the extension only loads code when you actually click "Copy". It uses **zero memory and CPU** in the background.
+*   🛠 **Modern Tech Stack**: Rebuilt from scratch with **Vite** and **TypeScript** for rock-solid reliability.
+*   📋 **Copy All Tabs**: New Popup UI lets you copy a list of all open tabs in one click.
+*   ⚙️ **Customizable**: New Options page to configure your preferred bullet style (`-` vs `*`) and heading style.
+*   🔒 **Secure**: Fully compliant with **Manifest V3**, requesting strictly necessary permissions only.
+
+---
 
 ## Features
 
 The extension allows you to copy selected text on a page as Markdown with support for features including the following:
 
-- **Lean & Efficient**: Uses on-demand script injection (0% resource usage when idle).
-- **Copy All Tabs**: Popup menu allows copying all open tabs as a Markdown list.
-- **Customizable**: Configure heading styles, bullet markers, and more via Options.
 - **Rich Content Support**:
     - Ability to copy links, images, and selected text as Markdown.
     - Linked images, will have options to individually select link or images.
