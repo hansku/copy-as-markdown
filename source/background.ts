@@ -13,6 +13,12 @@ import converterUrl from './converter.ts?script';
 
 async function injectAndConvert(tabId: number, actionType: string, htmlContent: string) {
 	try {
+		const tab = await chrome.tabs.get(tabId);
+		if (!tab.url || tab.url.startsWith('chrome://') || tab.url.startsWith('edge://') || tab.url.startsWith('about:') || tab.url.startsWith('data:')) {
+			// Cannot inject content scripts into these pages
+			return;
+		}
+
 		if (!converterUrl) throw new Error("Converter script URL not found");
 
 		await chrome.scripting.executeScript({
