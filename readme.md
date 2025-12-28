@@ -1,4 +1,4 @@
-# <img src="source/copy-as-markdown.png" width="45" align="left"> Copy as Markdown
+# <img src="public/copy-as-markdown.png" width="45" align="left"> Copy as Markdown
 
 > Browser extension to copy hyperlinks, images, and selected text as Markdown to your clipboard
 
@@ -10,30 +10,55 @@
 
 ## Features
 
-The extension allows you to copy selected text on a page as Markdown with support for features including the following
+The extension allows you to copy selected text on a page as Markdown with support for features including the following:
 
-- Ability to copy links, images, and selected text as Markdown.
-- Linked images, will have options to individually select link or images.
-- Formatted text such as _italic_, **bold**, ~~strike-through~~, and `inline code`.
-- Unordered and ordered lists, with [task lists](https://github.github.com/gfm/#task-list-items-extension-) support.
-- Tables, with respect to [GFM](https://github.github.com/gfm/#tables-extension-).
-- Fenced code blocks, with language detection using [info strings](https://github.github.com/gfm/#example-112).
-- MathML to LaTeX conversion, using [mathml-to-latex](https://github.com/asnunes/mathml-to-latex) (delimited by `$` and `$$` for inline and block rendering respectively).
+- **Lean & Efficient**: Uses on-demand script injection (0% resource usage when idle).
+- **Copy All Tabs**: Popup menu allows copying all open tabs as a Markdown list.
+- **Customizable**: Configure heading styles, bullet markers, and more via Options.
+- **Rich Content Support**:
+    - Ability to copy links, images, and selected text as Markdown.
+    - Linked images, will have options to individually select link or images.
+    - Formatted text such as _italic_, **bold**, ~~strike-through~~, and `inline code`.
+    - Unordered and ordered lists, with [task lists](https://github.github.com/gfm/#task-list-items-extension-) support.
+    - Tables, with respect to [GFM](https://github.github.com/gfm/#tables-extension-).
+    - Fenced code blocks, with language detection using [info strings](https://github.github.com/gfm/#example-112).
+    - MathML to LaTeX conversion, using [mathml-to-latex](https://github.com/asnunes/mathml-to-latex) (delimited by `$` and `$$` for inline and block rendering respectively).
 
 <table>
 	<tr>
 		<th width="50%">
-            <p><img src="./media/screenshot-640x400.png">
+            <p><img src="./media/screenshot-640x400.png" width="100%">
 		<th width="50%">
-			<p><img src="./media/screenshot-1280x800.png">
+			<p><img src="./media/screenshot-1280x800.png" width="100%">
 </table>
+
+## Development
+
+This extension is built with **Vite** and **TypeScript**.
+
+### Build
+
+```bash
+npm install
+npm run build
+```
+
+This will generate a `distribution` folder.
+
+### Load in Chrome
+
+1. Go to `chrome://extensions`
+2. Enable Developer Mode
+3. Click "Load Unpacked" and select the `distribution` folder.
 
 ## Permissions
 
 The extension requires the following permission from you for working.
 
 1. `contextMenus`: to show option when right-clicking.
-1. `activeTab`: to be able to access content on page.
+2. `activeTab`: to be able to access content on page.
+3. `scripting`: to inject the conversion logic only when requested.
+4. `storage`: to save your preferences.
 
 ## Known Issues
 
