@@ -3,7 +3,7 @@
 > A fast, lean, and modern browser extension to copy hyperlinks, images, and selected text as Markdown.
 
 <p align="center">
-    <a href="https://chromewebstore.google.com/detail/copy-as-markdown/nlaionblcaejecbkcillglodmmfhjhfi"><img src="https://img.shields.io/chrome-web-store/v/nlaionblcaejecbkcillglodmmfhjhfi.svg?label=Chrome%20Web%20Store&logo=google-chrome&logoColor=white&color=blue" alt="Chrome Web Store"></a>
+    <a href="https://chromewebstore.google.com/detail/ngffkknkolnfebepjfhnifbbggebmngh"><img src="https://img.shields.io/chrome-web-store/v/ngffkknkolnfebepjfhnifbbggebmngh.svg?label=Chrome%20Web%20Store&logo=google-chrome&logoColor=white&color=blue" alt="Chrome Web Store"></a>
     <a href="https://addons.mozilla.org/en-US/firefox/addon/cpy-as-md"><img src="https://img.shields.io/amo/v/cpy-as-md.svg?label=Firefox%20Add-ons&logo=firefox-browser&logoColor=white&color=orange" alt="Firefox Add-ons"></a>
 </p>
 
@@ -103,7 +103,7 @@ When copying links and images, Chrome doesn’t let you extract images alt text 
 [MIT](license)
 
 [link-firefox]: https://addons.mozilla.org/en-US/firefox/addon/cpy-as-md
-[link-chrome]: https://chromewebstore.google.com/detail/copy-as-markdown/nlaionblcaejecbkcillglodmmfhjhfi
+[link-chrome]: https://chromewebstore.google.com/detail/ngffkknkolnfebepjfhnifbbggebmngh
 [link-security-considerations]: https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API#security_considerations
 [link-transient-activation]: https://developer.mozilla.org/en-US/docs/Web/Security/User_activation
 [link-secure-contexts]: https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts
